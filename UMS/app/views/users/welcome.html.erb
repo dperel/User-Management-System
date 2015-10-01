@@ -1,0 +1,8 @@
+Homepage<br>
+<%if current_user%>
+Signed in as <%=current_user.name%>
+<%= link_to "See my profile", user_path(current_user)%>
+<%else%>
+<%= link_to "Sign up with Twitter", '/auth/twitter'%><br>
+By clicking sign up, you agree to all terms of service.
+<%end%>

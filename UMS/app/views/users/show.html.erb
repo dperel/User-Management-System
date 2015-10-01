@@ -1,12 +1,36 @@
 User Profile<br>
-<%if @user%>
-<p>Welcome, <%=@user.name%></p>
-<p><%= link_to "Find friends", users_path %></p>
-<br>
-<h2>Your friends</h2>
-  <ul>
-    <%user.friends.map |friend| do %>
-    <li><%= user.name %></li>
+<% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+<% end %>
+
+<%if @user.accept_terms %>
+  <p>Welcome, <%=@user.name%></p>
+  <p><%= link_to "Find friends", users_path %></p>
+  <br>
+  <%if @user.friends %>
+    <h2>Your friends</h2>
+      <ul>
+        <%@user.friends.map do |friend| %>
+        <li><%= @user.name %></li>
+        <%end%>
+      </ul>
     <%end%>
-  </ul>
+  <%end%>
+
+
+<%unless @user.accept_terms%> 
+Complete your profile to search for friends.
+  <%=form_for @user, url: {action: "update"} do |f|%>
+    Name: <%= f.text_field :name %><br />
+    City: <%= f.text_field :city %><br />
+    Country: <%= f.text_field :country %><br />
+    Age: <%= f.text_field :age %><br />
+    Email: <%= f.text_field :email %><br />
+    Email Confirmation: <%= f.text_field :email_confirmation %><br />
+    Bio: <%= f.text_area :bio %><br />
+    Online Portfolio Link: <%= f.text_field :online_portfolio %><br />
+    Accept Terms: <%= f.check_box :accept_terms %><br />
+  <%= f.submit %><br />
+<%end%>
+
 <%end%>
