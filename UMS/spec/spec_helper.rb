@@ -4,6 +4,9 @@
 # this file to always be loaded, without a need to explicitly require it in any
 # files.
 #
+
+require 'webmock/rspec'
+
 # Given that it is always loaded, you are encouraged to keep this file as
 # light-weight as possible. Requiring heavyweight dependencies from this file
 # will add to the boot time of your test suite on EVERY test run, even for an
@@ -31,6 +34,12 @@ RSpec.configure do |config|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
+  config.before(:each) do
+     stub_request(:get, /api.twitter.com/).
+       with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
+       to_return(status: 200, body: "stubbed response", headers: {})
+   end
+
   # rspec-mocks config goes here. You can use an alternate test double
   # library (such as bogus or mocha) by changing the `mock_with` option here.
   config.mock_with :rspec do |mocks|
@@ -39,6 +48,7 @@ RSpec.configure do |config|
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
   end
+  WebMock.disable_net_connect!(allow_localhost: true)
 
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
