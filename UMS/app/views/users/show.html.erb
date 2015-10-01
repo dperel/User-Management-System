@@ -1,0 +1,10 @@
+User Profile<br>
+<p>Welcome, <%=@user.name%></p>
+<p><%= link_to "Find friends", users_path %></p>
+<br>
+<h2>Your friends</h2>
+  <ul>
+    <%user.friends.map |friend| do %>
+    <li><%= user.name %></li>
+    <%end%>
+  </ul>
