@@ -1,6 +1,9 @@
-<%@user.each do |user|%>
+Index of all Users
+<%if @users%>
+<%@users.each do |user|%>
 <div class="user">
   <%=user.name%>
   <%= link_to "Add friend", relationships_path(:friend_id => user), :method => :post %>
 </div>
 <%end%>
+<%end%> 
