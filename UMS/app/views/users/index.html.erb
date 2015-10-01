@@ -1,9 +1,10 @@
 Index of all Users
+<%= link_to "Sign up", new_user_path %>
 <%if @users%>
-<%@users.each do |user|%>
-<div class="user">
-  <%=user.name%>
-  <%= link_to "Add friend", relationships_path(:friend_id => user), :method => :post %>
-</div>
+  <%@users.map do |user|%>
+  <div class="user">
+    <%=user.name%>
+    <%= link_to "Add friend", relationships_path(:friend_id => user), :method => :post %>
+  </div>
+  <%end%>
 <%end%>
-<%end%> 
