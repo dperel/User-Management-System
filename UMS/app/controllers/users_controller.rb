@@ -6,10 +6,11 @@ class UsersController < ApplicationController
   def create
     @user = User.create(user_params)
     if @user.save
+      @users = User.all
       render "index"
     else
-      flash[:notice] = "Could not create user account"
-      render "index"
+      flash[:notice] = "Could not create user account. Make sure emails match."
+      redirect_to :back
     end
   end
 
